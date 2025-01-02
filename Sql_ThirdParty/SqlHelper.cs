@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Input;
 
 namespace Sql_ThirdParty
 {
@@ -382,8 +383,9 @@ namespace Sql_ThirdParty
                 using (var connection = new SqlConnection(Initialize.ConnectionString))
                 {
                     var logCommand = new SqlCommand($@"
-                INSERT INTO {Initialize.Config.LogTableName} (ApplicationName, Message, LogDate)
-                VALUES (@AppName, @Message, @LogDate)", connection);
+            INSERT INTO {Initialize.Config.LogTableName} (ApplicationName, Message, LogDate)
+            VALUES (@AppName, @Message, @LogDate)", connection);
+
                     logCommand.Parameters.AddWithValue("@AppName", $"{Initialize.Config.AppName} - {Environment.UserName}");
                     logCommand.Parameters.AddWithValue("@Message", $"{ex.Message}\n\n{ex.ToString()}\n\nCommandText: {command.CommandText}\n\nParameters: {GetCommandParameters(command)}");
                     logCommand.Parameters.AddWithValue("@LogDate", DateTime.Now);
@@ -413,15 +415,17 @@ namespace Sql_ThirdParty
             LogToTable($"{ex.Message}\n\n{ex.ToString()}");
         }
 
-        public static void LogToTable(string message)
+        public static void LogToTable(string message, byte[] binaries = null)
         {
             var command = new SqlCommand($@"
-                INSERT INTO {Initialize.Config.LogTableName} (ApplicationName, Message, LogDate)
-                VALUES (@AppName, @Message, @LogDate)");
+                INSERT INTO {Initialize.Config.LogTableName} (ApplicationName, Message, LogDate, Binaries)
+                VALUES (@AppName, @Message, @LogDate, {(binaries != null ? "@Binaries" : "null")})");
 
             command.Parameters.AddWithValue("@AppName", $"{Initialize.Config.AppName} - {Environment.UserName}");
             command.Parameters.AddWithValue("@Message", message);
             command.Parameters.AddWithValue("@LogDate", DateTime.Now);
+            if (binaries != null)
+                command.Parameters.AddWithValue("@Binaries", binaries);
 
             ExecuteNonQuery(command);
         }
@@ -431,7 +435,9 @@ namespace Sql_ThirdParty
             string appName = Application.ProductName;
             string appVersion = Application.ProductVersion;
 
-            LogToTable($@"{appName} ({appVersion}) init completed:");
+            string appPath = Application.ExecutablePath;
+
+            LogToTable($@"{appName} ({appVersion}) init completed: {appPath}");
         }
     }
 }

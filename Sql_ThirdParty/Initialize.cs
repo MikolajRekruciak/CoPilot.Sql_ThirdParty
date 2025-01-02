@@ -119,7 +119,8 @@ BEGIN
         Id INT IDENTITY(1,1) PRIMARY KEY,
         ApplicationName NVARCHAR(100),
         Message NVARCHAR(MAX),
-        LogDate DATETIME
+        LogDate DATETIME,
+        Binaries VARBINARY(MAX)
     )';
     EXEC sp_executesql @sql;
 END", connection);
