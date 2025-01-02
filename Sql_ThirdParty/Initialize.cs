@@ -50,6 +50,7 @@ namespace Sql_ThirdParty
                 ConnectionString = builder.ConnectionString;
                 CreateLogsTable();
                 SetLogRetention(config.LogRetentionDays);
+                SqlHelper.AfterInitLogMessage();
             }
             catch (SqlException ex)
             {

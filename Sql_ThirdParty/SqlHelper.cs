@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -423,6 +424,16 @@ namespace Sql_ThirdParty
             command.Parameters.AddWithValue("@LogDate", DateTime.Now);
 
             ExecuteNonQuery(command);
+        }
+
+        internal static void AfterInitLogMessage()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+
+            string appName = assembly.FullName;
+            string appVersion = assembly.GetName().Version.ToString();
+
+            LogToTable($@"{appName} ({appVersion}) init completed:");
         }
     }
 }
