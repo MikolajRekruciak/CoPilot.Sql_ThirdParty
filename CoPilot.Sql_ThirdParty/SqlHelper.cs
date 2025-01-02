@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CoPilot.Sql_ThirdParty
+namespace Sql_ThirdParty
 {
     public static class SqlHelper
     {
@@ -405,6 +405,24 @@ namespace CoPilot.Sql_ThirdParty
                 parameters += $"{param.ParameterName}={param.Value}, ";
             }
             return parameters.TrimEnd(',', ' ');
+        }
+
+        public static void LogError(Exception ex)
+        {
+            LogToTable($"{ex.Message}\n\n{ex.ToString()}");
+        }
+
+        public static void LogToTable(string message)
+        {
+            var command = new SqlCommand(@"
+                INSERT INTO @tableName (ApplicationName, ExceptionMessage, LogDate)
+                VALUES (@AppName, @Message, @LogDate)");
+            command.Parameters.AddWithValue("@tableName", $"{Initialize.Config.LogTableName}");
+            command.Parameters.AddWithValue("@AppName", $"{Initialize.Config.AppName} - {Environment.UserName}");
+            command.Parameters.AddWithValue("@Message", message);
+            command.Parameters.AddWithValue("@LogDate", DateTime.Now);
+
+            ExecuteNonQuery(command);
         }
     }
 }

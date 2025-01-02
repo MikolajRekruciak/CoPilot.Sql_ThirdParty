@@ -7,8 +7,8 @@
     <ProjectGuid>{255AA1B5-ACA1-4BBE-9DF6-307FBD1B14C7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CoPilot.Sql_ThirdParty</RootNamespace>
-    <AssemblyName>CoPilot.Sql_ThirdParty</AssemblyName>
+    <RootNamespace>Sql_ThirdParty</RootNamespace>
+    <AssemblyName>Sql_ThirdParty</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -29,7 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\CoPilot.Sql_ThirdParty.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Sql_ThirdParty.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

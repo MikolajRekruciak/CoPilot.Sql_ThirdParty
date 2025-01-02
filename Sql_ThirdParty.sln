@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoPilot.Sql_ThirdParty", "CoPilot.Sql_ThirdParty\CoPilot.Sql_ThirdParty.csproj", "{255AA1B5-ACA1-4BBE-9DF6-307FBD1B14C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sql_ThirdParty", "CoPilot.Sql_ThirdParty\Sql_ThirdParty.csproj", "{255AA1B5-ACA1-4BBE-9DF6-307FBD1B14C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
