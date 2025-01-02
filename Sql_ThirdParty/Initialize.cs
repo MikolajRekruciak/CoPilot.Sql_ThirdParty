@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Sql_ThirdParty
@@ -92,6 +93,13 @@ EXEC sp_executesql @sql;", connection);
 
         private static void CreateLogsTable()
         {
+            if (Config.LogTableName.Count(q => q == '.') != 1)
+            {
+                MessageBox.Show($@"Invalid LogTableName ({Config.LogTableName ?? ""}), we require value in format TABLE_SCHEMA.TABLE_NAME");
+                throw new ArgumentException();
+            }
+
+
             try
             {
                 using (var connection = new SqlConnection(ConnectionString))
@@ -99,7 +107,13 @@ EXEC sp_executesql @sql;", connection);
                     var command = new SqlCommand(@"
                         DECLARE @sql NVARCHAR(MAX);
 
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name=@tableName AND xtype='U')
+IF NOT EXISTS (
+    SELECT * 
+    FROM INFORMATION_SCHEMA.TABLES 
+    WHERE TABLE_NAME = PARSENAME(@tableName, 1) 
+    AND TABLE_SCHEMA = PARSENAME(@tableName, 2) 
+    AND TABLE_TYPE = 'BASE TABLE'
+)
 BEGIN
     SET @sql = 'CREATE TABLE ' + @tableName + ' (
         Id INT IDENTITY(1,1) PRIMARY KEY,

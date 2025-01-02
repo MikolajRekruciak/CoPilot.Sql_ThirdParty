@@ -382,7 +382,7 @@ namespace Sql_ThirdParty
                 using (var connection = new SqlConnection(Initialize.ConnectionString))
                 {
                     var logCommand = new SqlCommand($@"
-                INSERT INTO {Initialize.Config.LogTableName} (ApplicationName, ExceptionMessage, LogDate)
+                INSERT INTO {Initialize.Config.LogTableName} (ApplicationName, Message, LogDate)
                 VALUES (@AppName, @Message, @LogDate)", connection);
                     logCommand.Parameters.AddWithValue("@AppName", $"{Initialize.Config.AppName} - {Environment.UserName}");
                     logCommand.Parameters.AddWithValue("@Message", $"{ex.Message}\n\n{ex.ToString()}\n\nCommandText: {command.CommandText}\n\nParameters: {GetCommandParameters(command)}");
@@ -415,10 +415,10 @@ namespace Sql_ThirdParty
 
         public static void LogToTable(string message)
         {
-            var command = new SqlCommand(@"
-                INSERT INTO @tableName (ApplicationName, ExceptionMessage, LogDate)
+            var command = new SqlCommand($@"
+                INSERT INTO {Initialize.Config.LogTableName} (ApplicationName, Message, LogDate)
                 VALUES (@AppName, @Message, @LogDate)");
-            command.Parameters.AddWithValue("@tableName", $"{Initialize.Config.LogTableName}");
+
             command.Parameters.AddWithValue("@AppName", $"{Initialize.Config.AppName} - {Environment.UserName}");
             command.Parameters.AddWithValue("@Message", message);
             command.Parameters.AddWithValue("@LogDate", DateTime.Now);
@@ -428,10 +428,8 @@ namespace Sql_ThirdParty
 
         internal static void AfterInitLogMessage()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-
-            string appName = assembly.FullName;
-            string appVersion = assembly.GetName().Version.ToString();
+            string appName = Application.ProductName;
+            string appVersion = Application.ProductVersion;
 
             LogToTable($@"{appName} ({appVersion}) init completed:");
         }

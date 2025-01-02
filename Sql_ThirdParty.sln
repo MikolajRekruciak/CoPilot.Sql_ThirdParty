@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sql_ThirdParty", "Sql_ThirdParty\Sql_ThirdParty.csproj", "{255AA1B5-ACA1-4BBE-9DF6-307FBD1B14C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTester", "ConsoleAppTester\ConsoleAppTester.csproj", "{0569A2C8-FD75-413E-AF12-68645537D8AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{255AA1B5-ACA1-4BBE-9DF6-307FBD1B14C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{255AA1B5-ACA1-4BBE-9DF6-307FBD1B14C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{255AA1B5-ACA1-4BBE-9DF6-307FBD1B14C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0569A2C8-FD75-413E-AF12-68645537D8AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0569A2C8-FD75-413E-AF12-68645537D8AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0569A2C8-FD75-413E-AF12-68645537D8AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0569A2C8-FD75-413E-AF12-68645537D8AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
